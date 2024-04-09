@@ -1,12 +1,13 @@
 #include "entity.h"
 
-int Entity::numberOfEntities = 0;
+int Entity::currentFreeID = 0;
 
-Entity::Entity(int n = 10)
+Entity::Entity(Coordinates pos, int n)
     : timeToLive(n)
+    , position(pos)
 {
-    this->id = Entity::numberOfEntities;
-    Entity::numberOfEntities += 1;
+    this->id = Entity::currentFreeID;
+    Entity::currentFreeID += 1;
 };
 
 void Entity::action()
@@ -17,6 +18,7 @@ void Entity::action()
 std::ostream& operator<<(std::ostream& os, const Entity& e)
 {
     os << "ID: " << e.getID() << std::endl
-       << "Time to live: " << e.getTTL() << std::endl;
+       << "Time to live: " << e.getTTL() << std::endl
+       << "Coordinates: (" << e.getPos()->row << "," << e.getPos()->col << ")" << std::endl;
     return os;
 }
