@@ -7,13 +7,17 @@
 
 using std::cout;
 
+int n = 10;
+
+int Entity::currentFreeID = 0;
+int Entity::N = 10;
+
 int main()
 {
-    Map map(10);
+    Map map(n);
     cout << map;
-    map.removeEntity(1);
-    map.removeEntity(2);
-    Entity* e = new Entity(Coordinates{4,2});
-    map.addEntity(e);
+    map.moveAnimal(1, RIGHT);
+    map.moveAnimal(1, RIGHT);
+    map.moveAnimal(1, RIGHT);
     cout << map;
 }

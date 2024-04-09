@@ -21,6 +21,9 @@ public:
     // constructors
     Map(int);
 
+    // destructor
+    ~Map();
+
     // getters
     inline int getMapLenght() const { return N; };
     inline int getAmount(int row, int col) const { return board[row][col].size(); };
@@ -33,6 +36,11 @@ public:
     void addEntity(Entity*);
     void removeEntity(Entity*);
     void removeEntity(int n);
+
+    void moveAnimal(int,Direction);
 };
+
+
+
 
 #endif // MAP_H_

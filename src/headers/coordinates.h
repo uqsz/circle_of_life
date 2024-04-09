@@ -6,4 +6,7 @@ struct Coordinates {
     int col;
 };
 
+enum Direction {UP,RIGHT,DOWN,LEFT};
+
+
 #endif // COORDINATES_H_

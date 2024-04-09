@@ -1,10 +1,11 @@
+#include <algorithm> // Dla std::iota, std::shuffle
 #include <iomanip>
+#include <random>
 
 #include "map.h"
 
 using std::set;
 using std::vector;
-
 
 Map::Map(int n)
     : N(n)
@@ -12,10 +13,25 @@ Map::Map(int n)
     board = vector<vector<set<int>>>(n, vector<set<int>>(n));
     int amountOfAnimals = n * n / 4;
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    vector<int> indices = vector<int>(n * n);
+    std::iota(indices.begin(), indices.end(), 0);
+    std::shuffle(indices.begin(), indices.end(), gen);
+
     for (int i = 0; i < amountOfAnimals; i++) {
-        Entity* e = new Entity(Coordinates { i % n, i % n });
+        Entity* e = new Animal(Coordinates { int(indices[i] / n), indices[i] % n });
         addEntity(e);
     }
+}
+
+Map::~Map()
+{
+    for (auto& e : entities) {
+        delete e.second;
+    }
+    entities.clear();
 }
 
 void Map::addEntity(Entity* e)
@@ -41,10 +57,16 @@ void Map::removeEntity(int id)
     }
 }
 
+void Map::moveAnimal(int id,Direction dir){
+    board[entities[id]->getPos()->row][entities[id]->getPos()->col].erase(id);
+    entities[id]->move(dir);
+    board[entities[id]->getPos()->row][entities[id]->getPos()->col].insert(id);
+}
+
 std::ostream& operator<<(std::ostream& os, const Map& map)
 {
     for (const auto& e : map.getHashMap()) {
-        std::cout << std::setw(6) << e.first << "(" << e.second->getPos()->row << "," << e.second->getPos()->row << ")   ";
+        std::cout << std::setw(6) << e.first << "(" << e.second->getPos()->row << "," << e.second->getPos()->col << ")   ";
     }
     std::cout << endl;
     for (int i = 0; i < map.getMapLenght(); i++) {

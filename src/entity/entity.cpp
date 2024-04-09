@@ -1,7 +1,5 @@
 #include "entity.h"
 
-int Entity::currentFreeID = 0;
-
 Entity::Entity(Coordinates pos, int n)
     : timeToLive(n)
     , position(pos)
@@ -21,4 +19,33 @@ std::ostream& operator<<(std::ostream& os, const Entity& e)
        << "Time to live: " << e.getTTL() << std::endl
        << "Coordinates: (" << e.getPos()->row << "," << e.getPos()->col << ")" << std::endl;
     return os;
+}
+
+// animal class
+Animal::Animal(Coordinates pos, int n)
+    : Entity(pos, n) {};
+
+void Animal::move(Direction dir)
+{
+    switch (dir) {
+    case LEFT:
+        (--position.col + N) % N;
+        break;
+    case UP:
+        (--position.row + N) % N;
+        break;
+    case RIGHT:
+        (++position.col) % N;
+        break;
+    case DOWN:
+        (++position.row) % N;
+        break;
+    default:
+        break;
+    }
+}
+
+void Animal::action()
+{
+    cout << "action!";
 }
