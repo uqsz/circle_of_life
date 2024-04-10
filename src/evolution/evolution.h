@@ -9,13 +9,15 @@ private:
     Map* map;
 
 public:
+    // constructors
     Evolution(Map*);
+
+    // functional methods
     void evolve();
     void timeToMove();
     void timeToEat();
     void timeToGrow();
     void timeToReproduce();
-
 };
 
 #endif // EVOLUTION_H_

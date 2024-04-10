@@ -17,12 +17,10 @@ class Map {
 private:
     vector<vector<set<int>>> animalsBoard;
     std::unordered_map<int, Animal*> animalsHashMap;
-
-    
+    vector<vector<Plant*>> plantsBoard;
     int N;
 
 public:
-    vector<vector<Plant*>> plantsBoard;
     // constructors
     Map(int);
 
@@ -40,11 +38,8 @@ public:
     friend std::ostream& operator<<(std::ostream&, const Map&);
 
     // functional methods
-
     void addEntity(Animal*);
-
     void removeEntity(Animal*);
-
     void moveAnimal(int, Direction);
 };
 

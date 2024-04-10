@@ -11,6 +11,7 @@ void Evolution::evolve()
     timeToGrow();
     timeToEat();
     timeToReproduce();
+    std::cout << *map;
 }
 
 void Evolution::timeToMove()
@@ -50,18 +51,17 @@ void Evolution::timeToEat()
 void Evolution::timeToGrow()
 {
     Plant* p;
-    for (int i = 0; i < map->getMapLenght(); i++) {
-        for (int j = 0; j < map->getMapLenght(); j++) {
+    int n = map->getMapLenght();
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(-1, 1);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             p = map->getPlantsBoard()[i][j];
             if (p->getEnergy() != 0) {
-                p->grow();
-                map->getPlantsBoard()[(i + 1 + map->getMapLenght()) % map->getMapLenght()][j]->readyToGrow();
+                map->getPlantsBoard()[(i + dis(gen) + n) % n][(j + dis(gen) + n) % n]->grow();
             }
-        }
-    }
-    for (int i = 0; i < map->getMapLenght(); i++) {
-        for (int j = 0; j < map->getMapLenght(); j++) {
-            map->getPlantsBoard()[i][j]->growIfYouCan();
         }
     }
 }

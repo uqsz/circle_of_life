@@ -13,16 +13,12 @@ int Entity::N = 5;
 int main()
 {
     Map map(Entity::N);
-    cout << map;
     Evolution ev(&map);
+
     ev.evolve();
-    cout << map;
     ev.evolve();
-    cout << map;
     ev.evolve();
-    cout << map;
     ev.evolve();
-    cout << map;
     ev.evolve();
-    cout << map;
+
 }

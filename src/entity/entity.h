@@ -3,19 +3,11 @@
 
 #include "../headers/coordinates.h"
 
-using std::cout;
 using std::endl;
 using std::vector;
 
-// abstract class
-class AbstractEntity {
-public:
-    virtual void action() = 0;
-};
-
 // entity class
-class Entity : public AbstractEntity {
-private:
+class Entity {
 protected:
     int id;
     Coordinates position;
@@ -28,15 +20,10 @@ public:
 
     // getters
     inline int getID() const { return id; }
-
     const inline Coordinates* getPos() const { return &position; }
 
     // operators
     friend std::ostream& operator<<(std::ostream&, const Entity&);
-
-    // functional methods
-    void action() override;
-    virtual void move(Direction);
 };
 
 // animal class
@@ -45,30 +32,35 @@ private:
     int timeToLive;
 
 public:
+    // constructors
     Animal(Coordinates, int n = 10);
+
+    // getters
     inline int getTTL() const { return timeToLive; }
-    inline void decrementTTL() { --timeToLive; }
-    void eat() { ++timeToLive; }
     inline bool isDead() const { return timeToLive == 0; }
-    void move(Direction) override;
-    void action() override;
+
+    // functional methods
+    inline void decrementTTL() { --timeToLive; }
+    inline void eat() { ++timeToLive; }
+    void move(Direction);
 };
 
 // plant class
 class Plant : public Entity {
 private:
     int energy;
-    bool isReadyToGrow;
 
 public:
+    // constructors
     Plant(Coordinates, int n = 1);
+
+    // getters
     int getEnergy() const { return energy; }
     inline bool isDead() const { return energy == 0; }
+
+    // functional methods
     inline void eated() { --energy; }
-    inline void readyToGrow() { isReadyToGrow = true; }
     inline void grow() { ++energy; }
-    void growIfYouCan();
-    void action() override;
 };
 
 #endif // ENTITY_H_
