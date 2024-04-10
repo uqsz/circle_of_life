@@ -1,23 +1,28 @@
 #include "entity/entity.cpp"
 #include "map/map.cpp"
 // #include "entity/entity.h"
+#include "evolution/evolution.cpp"
+#include "evolution/evolution.h"
 #include "headers/coordinates.h"
 #include <iostream>
-#include <set>
-
 using std::cout;
 
-int n = 10;
-
 int Entity::currentFreeID = 0;
-int Entity::N = 10;
+int Entity::N = 5;
 
 int main()
 {
-    Map map(n);
+    Map map(Entity::N);
     cout << map;
-    map.moveAnimal(1, RIGHT);
-    map.moveAnimal(1, RIGHT);
-    map.moveAnimal(1, RIGHT);
+    Evolution ev(&map);
+    ev.evolve();
+    cout << map;
+    ev.evolve();
+    cout << map;
+    ev.evolve();
+    cout << map;
+    ev.evolve();
+    cout << map;
+    ev.evolve();
     cout << map;
 }

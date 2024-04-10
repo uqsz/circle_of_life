@@ -1,7 +1,3 @@
-#include <algorithm> // Dla std::iota, std::shuffle
-#include <iomanip>
-#include <random>
-
 #include "map.h"
 
 using std::set;
@@ -9,69 +5,78 @@ using std::vector;
 
 Map::Map(int n)
     : N(n)
+    , animalsBoard(vector<vector<set<int>>>(n, vector<set<int>>(n)))
+    , plantsBoard(vector<vector<Plant*>>(n, vector<Plant*>(n)))
 {
-    board = vector<vector<set<int>>>(n, vector<set<int>>(n));
-    int amountOfAnimals = n * n / 4;
-
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    vector<int> indices = vector<int>(n * n);
+    vector<int> indices = vector<int>(N * N);
     std::iota(indices.begin(), indices.end(), 0);
     std::shuffle(indices.begin(), indices.end(), gen);
 
-    for (int i = 0; i < amountOfAnimals; i++) {
-        Entity* e = new Animal(Coordinates { int(indices[i] / n), indices[i] % n });
+    for (int i = 0; i < N*N/2; i++) {
+        Animal* e = new Animal(Coordinates { int(indices[i] / N), indices[i] % N }, 3);
         addEntity(e);
+    }
+
+    std::uniform_int_distribution<> dis(0, 2);
+
+    for (int i = 0; i < N * N; i++) {
+        Plant* e = new Plant(Coordinates { i / N, i % N }, dis(gen));
+        plantsBoard[i / N][i % N] = e;
     }
 }
 
 Map::~Map()
 {
-    for (auto& e : entities) {
+    for (auto& e : animalsHashMap) {
         delete e.second;
     }
-    entities.clear();
+    animalsHashMap.clear();
 }
 
-void Map::addEntity(Entity* e)
+void Map::addEntity(Animal* e)
 {
-    board[e->getPos()->col][e->getPos()->row].insert(e->getID());
-    entities[e->getID()] = e;
-}
-
-void Map::removeEntity(Entity* e)
-{
-    board[e->getPos()->col][e->getPos()->row].erase(e->getID());
-    entities.erase(e->getID());
-    delete e;
-}
-
-void Map::removeEntity(int id)
-{
-    Entity* e = entities[id];
     if (e != nullptr) {
-        board[e->getPos()->col][e->getPos()->row].erase(id);
-        entities.erase(id);
-        delete e;
+        animalsBoard[e->getPos()->row][e->getPos()->col].insert(e->getID());
+        animalsHashMap.emplace(e->getID(), e);
     }
 }
 
-void Map::moveAnimal(int id,Direction dir){
-    board[entities[id]->getPos()->row][entities[id]->getPos()->col].erase(id);
-    entities[id]->move(dir);
-    board[entities[id]->getPos()->row][entities[id]->getPos()->col].insert(id);
+void Map::removeEntity(Animal* e)
+{
+    if (e != nullptr) {
+        auto it = animalsHashMap.find(e->getID());
+        if (it != animalsHashMap.end()) {
+            animalsBoard[e->getPos()->row][e->getPos()->col].erase(e->getID());
+            // delete e;
+            // animalsHashMap.erase(it);
+        }
+    }
+}
+
+void Map::moveAnimal(int id, Direction dir)
+{
+    animalsBoard[animalsHashMap.at(id)->getPos()->row][animalsHashMap.at(id)->getPos()->col].erase(id);
+    animalsHashMap.at(id)->move(dir);
+    animalsBoard[animalsHashMap.at(id)->getPos()->row][animalsHashMap.at(id)->getPos()->col].insert(id);
 }
 
 std::ostream& operator<<(std::ostream& os, const Map& map)
 {
-    for (const auto& e : map.getHashMap()) {
-        std::cout << std::setw(6) << e.first << "(" << e.second->getPos()->row << "," << e.second->getPos()->col << ")   ";
+    for (const auto& e : map.getAnimalsHashMap()) {
+        // std::cout << std::setw(6) << e.first << "(" << e.second->getPos()->row << "," << e.second->getPos()->col << ")   ";
+        // std::cout << *e.second;
     }
     std::cout << endl;
     for (int i = 0; i < map.getMapLenght(); i++) {
         for (int j = 0; j < map.getMapLenght(); j++) {
-            os << map.getAmount(i, j) << " ";
+            os << map.getAnimalsAmount(i, j) << " ";
+        }
+        os << "   ";
+        for (int j = 0; j < map.getMapLenght(); j++) {
+            os << map.plantsBoard[i][j]->getEnergy() << " ";
         }
         os << std::endl;
     }

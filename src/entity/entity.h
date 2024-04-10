@@ -2,8 +2,6 @@
 #define ENTITY_H_
 
 #include "../headers/coordinates.h"
-#include <iostream>
-#include <vector>
 
 using std::cout;
 using std::endl;
@@ -20,18 +18,17 @@ class Entity : public AbstractEntity {
 private:
 protected:
     int id;
-    int timeToLive;
     Coordinates position;
 
 public:
     static int currentFreeID;
     static int N;
     // constructors
-    Entity(Coordinates, int n = 10);
+    Entity(Coordinates);
 
     // getters
     inline int getID() const { return id; }
-    inline int getTTL() const { return timeToLive; }
+
     const inline Coordinates* getPos() const { return &position; }
 
     // operators
@@ -44,18 +41,34 @@ public:
 
 // animal class
 class Animal : public Entity {
+private:
+    int timeToLive;
+
 public:
     Animal(Coordinates, int n = 10);
+    inline int getTTL() const { return timeToLive; }
     inline void decrementTTL() { --timeToLive; }
+    void eat() { ++timeToLive; }
+    inline bool isDead() const { return timeToLive == 0; }
     void move(Direction) override;
     void action() override;
 };
 
 // plant class
-// class Plant : public Entity {
-// private:
-//     int energy;
-//     void action() override;
-// };
+class Plant : public Entity {
+private:
+    int energy;
+    bool isReadyToGrow;
+
+public:
+    Plant(Coordinates, int n = 1);
+    int getEnergy() const { return energy; }
+    inline bool isDead() const { return energy == 0; }
+    inline void eated() { --energy; }
+    inline void readyToGrow() { isReadyToGrow = true; }
+    inline void grow() { ++energy; }
+    void growIfYouCan();
+    void action() override;
+};
 
 #endif // ENTITY_H_

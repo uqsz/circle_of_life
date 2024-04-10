@@ -1,6 +1,10 @@
 #ifndef COORDINATES_H_
 #define COORDINATES_H_
 
+#include <iostream>
+#include <vector>
+#include <random>
+
 struct Coordinates {
     int row;
     int col;
