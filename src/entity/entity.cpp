@@ -22,7 +22,7 @@ Animal::Animal(Coordinates pos, int n)
 {
 }
 
-void Animal::move(Direction dir)
+void Animal::move(Direction dir, int N)
 {
     switch (dir) {
     case LEFT:

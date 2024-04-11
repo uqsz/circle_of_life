@@ -18,17 +18,21 @@ private:
     vector<vector<set<int>>> animalsBoard;
     std::unordered_map<int, Animal*> animalsHashMap;
     vector<vector<Plant*>> plantsBoard;
+    double animalsRatio;
+    double plantsRatio;
     int N;
 
 public:
     // constructors
-    explicit Map(int);
+    Map(int,int,int);
 
     // destructor
     ~Map();
 
     // getters
-    inline int getMapLenght() const { return N; };
+    inline int getMapLength() const { return N; };
+    inline double getAnimalsRatio() const { return animalsRatio; };
+    inline double getPlantsRatio() const { return plantsRatio; };
     inline int getAnimalsAmount(int row, int col) const { return animalsBoard[row][col].size(); };
     inline const std::unordered_map<int, Animal*>& getAnimalsHashMap() const { return animalsHashMap; };
     inline const vector<vector<set<int>>>& getAnimalsBoard() const { return animalsBoard; }

@@ -14,7 +14,6 @@ protected:
 
 public:
     static int currentFreeID;
-    static int N;
     // constructors
     explicit Entity(Coordinates);
 
@@ -33,7 +32,7 @@ private:
 
 public:
     // constructors
-    explicit Animal(Coordinates, int n = 10);
+    explicit Animal(Coordinates, int n = 3);
 
     // getters
     inline int getTTL() const { return timeToLive; }
@@ -42,7 +41,7 @@ public:
     // functional methods
     inline void decrementTTL() { --timeToLive; }
     inline void eat() { ++timeToLive; }
-    void move(Direction);
+    void move(Direction,int);
 };
 
 // plant class
@@ -60,7 +59,7 @@ public:
 
     // functional methods
     inline void eated() { --energy; }
-    inline void grow() { ++energy; }
+    inline void grow(int n) { energy+=n; }
 };
 
 #endif // ENTITY_H_

@@ -12,6 +12,9 @@ public:
     // constructors
     explicit Evolution(Map*);
 
+    //getters
+    inline const Map* getMap() const { return map;}
+
     // functional methods
     void evolve();
     void timeToMove();

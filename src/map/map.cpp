@@ -3,10 +3,12 @@
 using std::set;
 using std::vector;
 
-Map::Map(int n)
+Map::Map(int n, int animalsRatio, int plantsRatio)
     : N(n)
     , animalsBoard(vector<vector<set<int>>>(n, vector<set<int>>(n)))
     , plantsBoard(vector<vector<Plant*>>(n, vector<Plant*>(n)))
+    , animalsRatio(animalsRatio)
+    , plantsRatio(plantsRatio)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -15,12 +17,12 @@ Map::Map(int n)
     std::iota(indices.begin(), indices.end(), 0);
     std::shuffle(indices.begin(), indices.end(), gen);
 
-    for (int i = 0; i < N*N/2; i++) {
+    for (int i = 0; i < N*N/4; i++) {
         Animal* e = new Animal(Coordinates { int(indices[i] / N), indices[i] % N }, 3);
         addEntity(e);
     }
 
-    std::uniform_int_distribution<> dis(0, 2);
+    std::uniform_int_distribution<> dis(0, plantsRatio);
 
     for (int i = 0; i < N * N; i++) {
         Plant* e = new Plant(Coordinates { i / N, i % N }, dis(gen));
@@ -59,7 +61,7 @@ void Map::removeEntity(Animal* e)
 void Map::moveAnimal(int id, Direction dir)
 {
     animalsBoard[animalsHashMap.at(id)->getPos()->row][animalsHashMap.at(id)->getPos()->col].erase(id);
-    animalsHashMap.at(id)->move(dir);
+    animalsHashMap.at(id)->move(dir,N);
     animalsBoard[animalsHashMap.at(id)->getPos()->row][animalsHashMap.at(id)->getPos()->col].insert(id);
 }
 
@@ -70,12 +72,12 @@ std::ostream& operator<<(std::ostream& os, const Map& map)
         // std::cout << *e.second;
     }
     std::cout << endl;
-    for (int i = 0; i < map.getMapLenght(); i++) {
-        for (int j = 0; j < map.getMapLenght(); j++) {
+    for (int i = 0; i < map.getMapLength(); i++) {
+        for (int j = 0; j < map.getMapLength(); j++) {
             os << map.getAnimalsAmount(i, j) << " ";
         }
         os << "   ";
-        for (int j = 0; j < map.getMapLenght(); j++) {
+        for (int j = 0; j < map.getMapLength(); j++) {
             os << map.plantsBoard[i][j]->getEnergy() << " ";
         }
         os << std::endl;
