@@ -33,3 +33,5 @@
 
 .vscode
 tempCodeRunnerFile.cpp
+
+cmake-build-debug

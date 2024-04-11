@@ -22,7 +22,7 @@ private:
 
 public:
     // constructors
-    Map(int);
+    explicit Map(int);
 
     // destructor
     ~Map();

@@ -10,7 +10,7 @@ private:
 
 public:
     // constructors
-    Evolution(Map*);
+    explicit Evolution(Map*);
 
     // functional methods
     void evolve();

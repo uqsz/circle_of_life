@@ -16,7 +16,7 @@ public:
     static int currentFreeID;
     static int N;
     // constructors
-    Entity(Coordinates);
+    explicit Entity(Coordinates);
 
     // getters
     inline int getID() const { return id; }
@@ -33,7 +33,7 @@ private:
 
 public:
     // constructors
-    Animal(Coordinates, int n = 10);
+    explicit Animal(Coordinates, int n = 10);
 
     // getters
     inline int getTTL() const { return timeToLive; }
@@ -52,7 +52,7 @@ private:
 
 public:
     // constructors
-    Plant(Coordinates, int n = 1);
+    explicit Plant(Coordinates, int n = 1);
 
     // getters
     int getEnergy() const { return energy; }
