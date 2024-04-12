@@ -3,7 +3,7 @@
 
 
 Simulation::Simulation(Evolution* pt_evolution) : evol(pt_evolution), mapLength(pt_evolution->getMap()->getMapLength()){
-    window = new RenderWindow(VideoMode(mapLength*40, mapLength*40), "Simulation");
+    window = new RenderWindow(VideoMode(mapLength*25, mapLength*25), "Simulation");
     gridTemplate = this->drawGrid();
 }
 
