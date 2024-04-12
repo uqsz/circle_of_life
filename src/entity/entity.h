@@ -6,6 +6,9 @@
 using std::endl;
 using std::vector;
 
+
+
+
 // entity class
 class Entity {
 protected:
@@ -18,12 +21,15 @@ public:
     explicit Entity(Coordinates);
 
     // getters
-    inline int getID() const { return id; }
-    const inline Coordinates* getPos() const { return &position; }
+    [[nodiscard]] inline int getID() const { return id; }
+    [[nodiscard]] const inline Coordinates* getPos() const { return &position; }
 
     // operators
     friend std::ostream& operator<<(std::ostream&, const Entity&);
 };
+
+
+
 
 // animal class
 class Animal : public Entity {
@@ -32,17 +38,20 @@ private:
 
 public:
     // constructors
-    explicit Animal(Coordinates, int n = 3);
+    explicit Animal(Coordinates, int n = 1);
 
     // getters
-    inline int getTTL() const { return timeToLive; }
-    inline bool isDead() const { return timeToLive == 0; }
+    [[nodiscard]] inline int getTTL() const { return timeToLive; }
+    [[nodiscard]] inline bool isDead() const { return timeToLive == 0; }
 
     // functional methods
     inline void decrementTTL() { --timeToLive; }
     inline void eat() { ++timeToLive; }
-    void move(Direction,int);
+    void move(Direction,int); // update entity position
 };
+
+
+
 
 // plant class
 class Plant : public Entity {
@@ -54,8 +63,8 @@ public:
     explicit Plant(Coordinates, int n = 1);
 
     // getters
-    int getEnergy() const { return energy; }
-    inline bool isDead() const { return energy == 0; }
+    [[nodiscard]] int getEnergy() const { return energy; }
+    [[nodiscard]] inline bool isDead() const { return energy == 0; }
 
     // functional methods
     inline void eated() { --energy; }

@@ -1,12 +1,6 @@
 #include "gui.h"
 
-
-
 using namespace nana;
-
-GUI::GUI() {
-
-}
 
 void GUI::run(int animalsRatio, int plantsRatio, int mapSize) {
     Map map(mapSize,animalsRatio,plantsRatio);
@@ -64,10 +58,7 @@ void GUI::drawInterface() {
     layout.collocate();
     fm.show();
     exec();
-
-
 }
 
-GUI::~GUI() {
 
-}
+

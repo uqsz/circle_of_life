@@ -1,5 +1,5 @@
-#ifndef GUI_H
-#define GUI_H
+#ifndef SIMULATION_H
+#define SIMULATION_H
 
 #include <SFML/Graphics.hpp>
 #include "../map/map.h"
@@ -13,13 +13,19 @@ private:
     Evolution* evol;
     VertexArray* gridTemplate;
     int mapLength;
+
 public:
+    //constructor
     explicit Simulation(Evolution*);
+
+    // destructor
     ~Simulation(){delete gridTemplate;};
-    VertexArray* drawGrid();
-    void drawEntities();
-    void run();
+
+    // functional methods
+    VertexArray* drawGrid(); // setting a grid used in window
+    void drawEntities(); // updating entities position on grid
+    void run(); // opening window and running simulation
 };
 
 
-#endif // GUI_H
+#endif // SIMULATION_H

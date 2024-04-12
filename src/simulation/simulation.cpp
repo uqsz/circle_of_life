@@ -8,10 +8,10 @@ Simulation::Simulation(Evolution* pt_evolution) : evol(pt_evolution), mapLength(
 }
 
 VertexArray* Simulation::drawGrid(){
+
     // initialize values
     int numLines = mapLength+mapLength-2;
     auto* grid = new VertexArray(sf::Lines, 2*(numLines));
-
     window->setView(window->getDefaultView());
     auto size = window->getView().getSize();
     float rowH = size.y/mapLength;
@@ -38,12 +38,14 @@ VertexArray* Simulation::drawGrid(){
 void Simulation::drawEntities() {
     float centerX;
     float centerY;
-    sf::CircleShape dot(5);
+    CircleShape dot(5);
     auto size = window->getView().getSize();
     float rowH = size.y/mapLength;
     float colW = size.x/mapLength;
     for (int i = 0; i<mapLength ; i++){
         for (int j = 0; j<mapLength ; j++){
+
+            // drawing animals
             if (evol->getMap()->getAnimalsAmount(i,j)!=0) {
                 centerX = j * colW + colW / 4;
                 centerY = i * rowH + rowH / 4;
@@ -52,6 +54,8 @@ void Simulation::drawEntities() {
                 dot.setPosition(centerX, centerY);
                 window->draw(dot);
             }
+
+            // drawing plants
             if(!evol->getMap()->getPlantsBoard()[i][j]->isDead()) {
                 centerX = j * colW + 3*colW / 4;
                 centerY = i * rowH + 3*rowH / 4;
@@ -65,13 +69,13 @@ void Simulation::drawEntities() {
 }
 
 void Simulation::run() {
-    sf::Clock timer;
+    Clock timer;
     while (window->isOpen())
     {
-        sf::Event event;
+        Event event;
         while (window->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == Event::Closed)
                 window->close();
             break;
         }

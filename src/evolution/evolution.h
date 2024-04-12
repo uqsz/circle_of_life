@@ -17,10 +17,10 @@ public:
 
     // functional methods
     void evolve();
-    void timeToMove();
-    void timeToEat();
-    void timeToGrow();
-    void timeToReproduce();
+    void timeToMove(); // animals moving on map
+    void timeToEat(); // animals eating plant
+    void timeToGrow(); // plants growing
+    void timeToReproduce(); // animals are reproducing
 };
 
 #endif // EVOLUTION_H_

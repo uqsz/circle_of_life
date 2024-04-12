@@ -1,5 +1,5 @@
-#ifndef WORLD_GUI_H
-#define WORLD_GUI_H
+#ifndef GUI_H
+#define GUI_H
 
 #include <SFML/Graphics.hpp>
 #include "../map/map.h"
@@ -16,13 +16,10 @@
 using namespace sf;
 
 class GUI {
-private:
-
 public:
-    GUI();
-    ~GUI();
-    void drawInterface();
-    void run(int, int, int);
+    // functional methods
+    void drawInterface(); // drawing graphic user interface
+    void run(int, int, int); // opening interface
 };
 
 
