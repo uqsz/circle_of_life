@@ -18,9 +18,9 @@ The ecosystem is just simple a NxN grid, but there are no boundaries. If an anim
 
 ## How it looks?
 
-The visualization is pretty simple. Animals are red dots and plants are green dots. Check out the demo video down below:
+The visualization is pretty simple. Animals are red dots and plants are green dots. Check out the demo video by clicking the link down below:
 
-[![Demo Video](https://img.youtube.com/vi/QOxhfn7AfWg/0.jpg)](https://www.youtube.com/watch?v=QOxhfn7AfWg)
+[Watch the demo video on YouTube](https://www.youtube.com/watch?v=QOxhfn7AfWg)
 
 
 
