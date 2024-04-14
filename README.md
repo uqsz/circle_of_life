@@ -10,7 +10,7 @@ Animals can move within the ecosystem and eat plants that they step on. Eating a
 unfortunately dies. When there are more than one animal on a field, they will reproduce and create new animals. 
 
 ### Plants
-Plant are not able to move. Each plant have its own energy. When its energy comes to zero, it also dies. If its greater then that,
+Plants are not able to move. Each plant have its own energy. When its energy comes to zero, it also dies. If its greater then that,
 it will grow up by adding energy to randomly chosen field around it. When an animal step on it, plant will be eaten and will lose part of its energy.
 
 ### Ecosystem
