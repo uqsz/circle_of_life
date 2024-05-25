@@ -39,10 +39,8 @@ To install the Circle of Life project, follow these steps:
 1. **Clone the Repository**: Clone the project repository to your local machine using Git:
 
     ```bash
-    git clone https://github.com/your_username/circle_of_life.git
+    git clone https://github.com/uqsz/circle_of_life.git
     ```
-
-   Replace `your_username` with your actual GitHub username.
 
 2. **Build the Project with CMake**: Navigate to the project directory and run CMake to generate the build files:
 
